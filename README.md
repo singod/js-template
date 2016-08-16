@@ -5,9 +5,7 @@
 方式一：直接写
 
 &lt;template data-render="{ name:'yourName',age:'yourAge' }"&gt;
-
 	&lt;span&gt;my name is {{name}},and my age is {{age}}&lt;/span&gt;
-
 &lt;/template&gt;
 
 方式二：直接引入外部模板
