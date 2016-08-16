@@ -15,19 +15,19 @@ js-template
 </template>
 
 exapmle.tpl
-'''javascript
+```javascript
 var dom = '<span>my name is {{name}},and my age is {{age}}</span>'
 var data = { name:'yourName',age:'yourAge' }
-'''
+```
 
 方式三：先引入外部模板后重新赋值
-'''html
+```html
 <template data-src="example.tpl" data-render="{ name:'newName',age:'newAge' }">
 </template>
-'''
+```
 
 * 该模版引擎也支持js标准语法
-'''html
+```html
 <template data-render="{ numbers:[1,2,3,4,5,6,7,8,9,10] }">
 	<div>
 		<% for(var number of numbers) { %>
@@ -35,4 +35,4 @@ var data = { name:'yourName',age:'yourAge' }
 		<% } %>
 	</div>
 </template>
-'''
+```
