@@ -1,18 +1,27 @@
-function fooTemplate(obj) {
-	var callback = obj && obj.callback || function(window,load) {};
-	var templateNodes = document.querySelectorAll('template');	/* 得到所有的template节点 */
+/* foo模板引擎 */
+;(function () {
+	var foo = {},
+	callback = function(window,load) {},	/* 所有模版渲染完毕后的回调函数 */
+	templateNodes = document.querySelectorAll('template'), /* 得到所有的template节点 */
+	load = function(src,callback) {	/* 模板（js）加载器 */
+		var scriptEle = document.createElement('script');
+		var head = document.getElementsByTagName('head')[0];
+		scriptEle.src = src;
+		scriptEle.onload = callback;
+		head.appendChild(scriptEle);
+	},
+	tplStorage = {},	/* 模版存储对象，用于存放编译后的模板 */
+	parseNode = document.querySelector('body').appendChild(document.createElement('div'));
 
-	/* 模版存储对象 */
-	var templateStore = {};
-	templateStore.number = 0;
-	templateStore.queue = [];	/* 一个队列，用于存储解析后的模版字符串 */
-	templateStore.add = function(key,val) {
+	tplStorage.number = 0;
+	tplStorage.queue = [];	/* 一个队列，用于存储解析后的模版字符串 */
+	tplStorage.add = function(key,val) {
 		this.queue[key] = val;
 		this.number++;
-		if(this.number == templateNodes.length)	/* 当templateStore.queue被填满时触发 */
-			this.full();
-	}
-	templateStore.full = function() {
+		if(this.number == templateNodes.length)	/* 当tplStorage.queue被填满时触发 */
+			this.whenFull();
+	};
+	tplStorage.whenFull = function() {
 		for(var i = 0;i < templateNodes.length;i++) {
 			var parentNode = templateNodes[i].parentNode;
 			parseNode.innerHTML = this.queue.shift();
@@ -21,16 +30,9 @@ function fooTemplate(obj) {
 		}
 		parseNode.remove();
 		callback(window,load);
-	}
+	};
 
-	/* 创建一个模版转换容器，该容器用于把str类型转化成node类型 */
-	var divEle = document.createElement('div');
-	divEle.style.display = 'none';
-	var body = document.querySelector('body');
-	var parseNode = body.appendChild(divEle);
-
-	/* 模版解析引擎 */
-	tpl = function(tpl) {
+	foo.tpl = function(tpl) {
 		/* 返回闭包 */
 		return {
 			render:function(data) {
@@ -54,19 +56,11 @@ function fooTemplate(obj) {
 				return htmlFrag.join('');
 			}
 		}
-	}
-
-	/* 模版加载器 */
-	var load = function(src,callback) {
-		var scriptEle = document.createElement('script');
-		var head = document.getElementsByTagName('head')[0];
-		scriptEle.src = src;
-		scriptEle.onload = callback;
-		head.appendChild(scriptEle);
 	};
-
-	/* 引入外部模版并解析 */
-	;(function() {
+	foo.conf = function(conf) {
+		callback = conf.callback || callback;
+	};
+	foo.start = function() {
 		for(var i = 0;i < templateNodes.length;i++) {
 			var tplSrc = templateNodes[i].getAttribute('data-src');
 			if((tplSrc)) {
@@ -74,7 +68,7 @@ function fooTemplate(obj) {
 					var tagData =  templateNodes[i].getAttribute('data-render');
 					load(tplSrc,function() {
 						/* 解析模版并加入存储模版对象 */
-						templateStore.add(i,tpl(dom).render(tagData && eval('(' + tagData + ')') || data));
+						tplStorage.add(i,foo.tpl(dom).render(tagData && eval('(' + tagData + ')') || data));
 					});
 				})(i);
 			} else {
@@ -90,9 +84,11 @@ function fooTemplate(obj) {
 							return '>';
 					});
 					/* 解析模版并加入模版存储对象 */
-					templateStore.add(i,tpl(dom).render(data));
+					tplStorage.add(i,foo.tpl(dom).render(data));
 				})(i);
 			}
 		}
-	})();
-};
+	};
+
+	window.foo = foo;
+})();

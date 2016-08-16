@@ -2,8 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<script src="template.js"></script>
-		<title>JS模板</title>
+		<title>Javascript模板引擎——foo</title>
 		<style>
 			.red {
 				color:red;
@@ -81,17 +80,26 @@
 				%>
 			</div>
 		</template>
+		<script src="template.js"></script>
+		<script>
+			/*
+				在通过对象传数据的时候，第一级的属性命名最好使用js变量规范。
+				请用{ name:'zzy',age:20 }
+				不支持{ 'my-name':'zzy','my-age':20 }
+				第二级是无所谓的：
+				{ name:'zzy',age:20,friend:{ 'fri-1':'a','fir-2':b } }也是可以的
+			*/
+			document.querySelectorAll('template')[2].setAttribute('data-render','{ url:"https://zhuzhiyuan.cc/" }');
+
+
+
+			/* 在所有的template的data-render属性都设置了值之后再调用foo.conf()和foo.start */
+			foo.conf({
+				callback:function() {	//渲染完毕回调
+					console.log('渲染完毕');
+				}
+			});
+			foo.start();
+		</script>
 	</body>
 </html>
-<script>
-	/*
-		在通过对象传数据的时候，第一级的属性命名最好使用js变量规范。
-		请用{ name:'zzy',age:20 }
-		不支持{ 'my-name':'zzy','my-age':20 }
-		第二级是无所谓的：
-		{ name:'zzy',age:20,friend:{ 'fri-1':'a','fir-2':b } }也是可以的
-	*/
-	document.querySelectorAll('template')[2].setAttribute('data-render','{ url:"https://zhuzhiyuan.cc/" }');
-	/* 在所有的template的data-render属性都设置了值之后再调用fooTemplate() */
-	fooTemplate();
-</script>
