@@ -11,8 +11,10 @@ js-template
 ```
 
 方式二：直接引入外部模板
+```html
 <template data-src="example.tpl">
 </template>
+```
 
 exapmle.tpl
 ```javascript
