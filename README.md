@@ -2,6 +2,7 @@ js-template
 ===========
 
 * 可通过如下方式解析template：
+----------------------------
 
 方式一：直接写
 ```html
@@ -29,6 +30,8 @@ var data = { name:'yourName',age:'yourAge' }
 ```
 
 * 该模版引擎也支持js标准语法
+---------------------------
+
 ```html
 <template data-render="{ numbers:[1,2,3,4,5,6,7,8,9,10] }">
 	<div>
