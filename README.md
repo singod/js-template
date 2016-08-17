@@ -4,20 +4,20 @@ js-template
 * 可通过如下方式解析template：
 ----------------------------
 
-方式一：直接写
+方式一：在标签内写模板
 ```html
 <template data-render="{ name:'yourName',age:'yourAge' }">
 	<span>my name is {{name}},and my age is {{age}}</span>
 </template>
 ```
 
-方式二：直接引入外部模板
+方式二：引入外部模板
 ```html
 <template data-src="example.tpl">
 </template>
 ```
 
-exapmle.tpl
+exapmle.tpl文件内容
 ```javascript
 var dom = '<span>my name is {{name}},and my age is {{age}}</span>'
 var data = { name:'yourName',age:'yourAge' }
