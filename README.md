@@ -42,4 +42,4 @@ var data = { name:'yourName',age:'yourAge' }
 </template>
 ```
 
-更多事例请查看：https://yuanzhizhu.github.io/js-template/
+更多事例请查看：https://yuanzhizhu.github.io/js-template/example1.html
