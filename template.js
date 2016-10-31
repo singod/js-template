@@ -1,11 +1,13 @@
 /* foo模板引擎 */
 ;(function () {
 	var foo = {},
-	callback = function(window,load) {},	/* 所有模版渲染完毕后的回调函数 */
+	head = document.querySelector('head'),
+	callback = function(window,load) {
+		
+	},	/* 所有模版渲染完毕后的回调函数 */
 	templateNodes = document.querySelectorAll('template'), /* 得到所有的template节点 */
 	load = function(src,callback) {	/* 模板（js）加载器 */
 		var scriptEle = document.createElement('script');
-		var head = document.getElementsByTagName('head')[0];
 		scriptEle.src = src;
 		scriptEle.onload = callback;
 		head.appendChild(scriptEle);
@@ -19,9 +21,9 @@
 		this.queue[key] = val;
 		this.number++;
 		if(this.number == templateNodes.length)	/* 当tplStorage.queue被填满时触发 */
-			this.whenFull();
+			this.deQueue();
 	};
-	tplStorage.whenFull = function() {
+	tplStorage.deQueue = function() {	/* 把所有模板弹出队列 */
 		for(var i = 0;i < templateNodes.length;i++) {
 			var parentNode = templateNodes[i].parentNode;
 			parseNode.innerHTML = this.queue.shift();
@@ -31,7 +33,6 @@
 		parseNode.remove();
 		callback(window,load);
 	};
-
 	foo.tpl = function(tpl) {
 		/* 返回闭包 */
 		return {
@@ -50,15 +51,16 @@
 					else    /* 否则就是js变量 */
 						jsCode.push('htmlFrag.push(' + match[1] + ');');
 					cursor = match[0].length + index;
-				}   
+				}
 				jsCode.push('htmlFrag.push(tpl.substring(' + cursor + '));')
 				eval(jsCode.join(''));
 				return htmlFrag.join('');
 			}
 		}
 	};
-	foo.conf = function(conf) {
+	foo.conf = function(conf = {}) {	//默认参数为{}
 		callback = conf.callback || callback;
+		return foo;
 	};
 	foo.start = function() {
 		for(var i = 0;i < templateNodes.length;i++) {
@@ -76,9 +78,9 @@
 					var dom = templateNodes[i].innerHTML;
 					var data = eval('(' + templateNodes[i].getAttribute('data-render') + ')');
 					/* 替换头尾的空白，以及部分实体字符 */
-					var re = /&lt;|&gt;/g;
+					var re = /&lt;|&gt;/g;	/* 下面的替换是为了解决template标签里面的<和>被浏览器转义的缺陷 */
 					dom = dom.replace(re,function(s0) {
-						if( s0 == '&lt;')
+						if(s0 == '&lt;')
 							return '<';
 						else if(s0 == '&gt;')
 							return '>';
@@ -89,6 +91,5 @@
 			}
 		}
 	};
-
 	window.foo = foo;
 })();

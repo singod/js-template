@@ -61,6 +61,7 @@
 
 		<br /><br />
 		<p class="red">例子有点无聊请谅解。请右键查看源代码。</p>
+		<a href="example3.html">如何把ajax数据渲染上去，请看例子3</a>
 
 		<script src="template.js"></script>
 		<script>
@@ -77,11 +78,12 @@
 
 			/* 在所有的template的data-render属性都设置了值之后再调用foo.conf()和foo.start */
 			foo.conf({
-				callback:function() {	//渲染完毕回调
+				callback:function(w,l) {	//渲染完毕回调
+					//w指window
+					//l指load(src)，用于加载外部js
 					console.log('渲染完毕');
 				}
-			});
-			foo.start();
+			}).start()
 		</script>
 	</body>
 </html>
