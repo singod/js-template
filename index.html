@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>template例子</title>
+		<style>
+			html, body {
+				margin:0;
+				padding:0;
+			}
+			table {
+				width:450px;
+				margin:auto;
+				filter:drop-shadow(0 0 5px rgba(0,0,0,.5));
+			}
+			thead tr {
+				background:#1a1f25;
+				color:rgba(255,255,255,.7);
+				font-weight:100;
+			}
+			tbody tr:nth-child(even) {
+				background:white;
+				color:rgba(0,0,0,.7);
+			}
+			tbody tr:nth-child(odd) {
+				background:#ebebeb;
+				color:rgba(0,0,0,.7);
+			}
+			td,th {
+				text-align:center;
+				line-height:50px;
+			}
+			h1 {
+				text-align:center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="table-box">
+			<template data-render="{ adj: '帅气的' }">
+				<h1>
+					{{adj}}表格
+				</h1>
+			</template>
+			<template data-src="table.tpl">
+			</template>
+		</div>
+	</body>
+	<script src="template.js"></script>
+	<script>
+		foo.onload = function(w, l) {
+			console.log('渲染完毕')
+		}
+		foo.start()
+	</script>
+</html>
