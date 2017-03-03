@@ -1,5 +1,4 @@
-详情请移步
-
+详情请移步  
 https://yuanzhizhu.github.io/js-template/
 
 	语法1:  
