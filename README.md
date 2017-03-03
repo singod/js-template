@@ -1,6 +1,4 @@
-	详情请移步
-	https://yuanzhizhu.github.io/js-template/
-
+	[详情请移步](https://yuanzhizhu.github.io/js-template/,"")
 
 	语法1:  
 	<template data-src="xxx.tpl"></template>
