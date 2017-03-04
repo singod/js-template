@@ -1,6 +1,9 @@
 详情请移步  
 https://yuanzhizhu.github.io/js-template/
 
+注：  
+需要通过http(s)协议进行访问，不支持file://的方式
+
 语法1:  
 ```html
 <template data-src="xxx.tpl"></template>
