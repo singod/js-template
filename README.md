@@ -2,7 +2,7 @@
 https://yuanzhizhu.github.io/js-template/
 
 注：  
-需要通过http(s)协议进行访问，不支持file://的方式
+需要通过http(s)协议进行访问，不支持file://的方式。除非浏览器支持本地跨域。
 
 语法1:  
 ```html
