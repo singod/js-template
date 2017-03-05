@@ -34,9 +34,8 @@
 	ewent.i = 0
 	ewent.record = function() {
 		this.i++
-		if(this.i == tplNodes.length) {
+		if(this.i == tplNodes.length)
 			foo.onload(window,loadJs)
-		}
 	}
 
 	foo.tpl = function(tpl) {

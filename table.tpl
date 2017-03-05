@@ -14,10 +14,10 @@
 		<% for(var i = 0; i < data.length; i++) { %>
 		<tr>
 			<td>
-				{{data[i]['name']}}
+				{{ data[i]['name'] }}
 			</td>
 			<td>
-				{{data[i]['age']}}
+				{{ data[i]['age'] }}
 			</td>
 		</tr>
 		<% } %>
