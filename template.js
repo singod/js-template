@@ -21,19 +21,20 @@
 		xhr.open('GET', src, true)
 		xhr.send()
 	},
-	parseNode = document.querySelector('body').appendChild(document.createElement('div')),
+	parseNode = document.createElement('div'),
 	replace = function(tplNode, html) {
 		var parentNode = tplNode.parentNode
+		var fragment = document.createDocumentFragment()
 		parseNode.innerHTML = html
-		parentNode.insertBefore(parseNode.children[0], tplNode)
-		tplNode.remove()
+		while(parseNode.childNodes.length)
+			fragment.appendChild(parseNode.childNodes[0])
+		parentNode.replaceChild(fragment, tplNode)
 	},
 	ewent = {}
 	ewent.i = 0
 	ewent.record = function() {
 		this.i++
 		if(this.i == tplNodes.length) {
-			parseNode.remove()
 			foo.onload(window,loadJs)
 		}
 	}
