@@ -76,14 +76,7 @@
 			else {
 					var dom = tplNodes[i].innerHTML
 					var data = eval('(' + tplNodes[i].getAttribute('data-render') + ')')
-					var re = /&lt;|&gt;/g
-					dom = dom.replace(re,function(s0) {
-						if(s0 == '&lt;')
-							return '<'
-						else if(s0 == '&gt;')
-							return '>'
-					})
-					var html = foo.tpl(dom).render(data)
+					var html = foo.tpl(decodeURIComponent(dom)).render(data)
 					replace(tplNodes[i], html)
 					ewent.record()
 			}
